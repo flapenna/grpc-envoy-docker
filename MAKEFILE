@@ -1,0 +1,7 @@
+.PHONY: dev dev-down go
+
+dev:
+	docker-compose up -d
+
+dev-down:
+	docker-compose down

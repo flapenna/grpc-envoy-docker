@@ -1,0 +1,19 @@
+version: '3'
+services:
+  grpcservice:
+    build:
+      context: .
+      dockerfile: Dockerfile-service
+    expose:
+      - "9091"
+  envoy:
+    build:
+      context: .
+      dockerfile: Dockerfile-envoy
+    volumes:
+      - ./envoy.yaml:/etc/envoy.yaml
+      - ./pb/user_service_definition.pb:/tmp/envoy/proto.pb
+    ports:
+      - "9090:9090"
+    links:
+      - grpcservice

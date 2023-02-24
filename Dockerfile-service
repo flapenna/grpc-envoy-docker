@@ -1,0 +1,9 @@
+FROM golang:alpine AS builder
+WORKDIR /build
+ADD go.mod .
+COPY . .
+RUN go build -o user_mgmt main.go
+FROM alpine
+WORKDIR /build
+COPY --from=builder /build/user_mgmt /build/user_mgmt
+CMD ["./user_mgmt"]
